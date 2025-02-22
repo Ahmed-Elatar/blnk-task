@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: blnk_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Ahmed2000-
+
+  
+
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./pro:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      # - redis
+    environment:
+      - DATABASE_NAME=blnk_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=Ahmed2000-
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+
+
+  celery:
+    build: .
+    command: celery -A pro worker -l info
+    volumes:
+      - ./pro:/app  
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_NAME=blnk_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=Ahmed2000-
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+
+  celery_beat:
+    build: .
+    command: celery -A pro beat -l info -S django 
+    volumes:
+      - ./pro:/app  
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_NAME=blnk_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=Ahmed2000-
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+
+
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+
+volumes:
+  postgres_data:

@@ -1,0 +1,140 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blnk-Task</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        nav {
+            background: #333;
+            padding: 10px;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        li {
+            position: relative;
+            padding: 10px;
+        }
+        li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        li a:hover {
+            background: #575757;
+            border-radius: 5px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 10px;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .nav-left {
+            display: flex;
+            flex-grow: 1;
+        }
+        .dropdown {
+            margin-left: auto;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="submit"] {
+            background: #04AA6D;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #038a57;
+        }
+        .form-container .helptext, .form-container li {
+            display: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".dropbtn").addEventListener("click", function(event) {
+                event.preventDefault();
+                let dropdown = document.querySelector(".dropdown-content");
+                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            });
+            document.addEventListener("click", function(event) {
+                if (!event.target.closest(".dropdown")) {
+                    document.querySelector(".dropdown-content").style.display = "none";
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <div class="nav-left">
+                <li><a href="{% url 'index'  %}">Home</a></li>
+            </div>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">User</a>
+                <div class="dropdown-content">
+                  {% if request.user.id == None %}
+                  <a href="{% url 'login'  %}" >Login </a>
+                  <a href="{% url 'signup'  %}">signup</a>
+                  {% endif %}
+                  {% if request.user.id != None %}
+                  <a href="/admin/password_change/" >Change Password</a>
+                  <a href="{% url 'logout'  %}">Logout</a>
+                  {% endif %}
+      
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
