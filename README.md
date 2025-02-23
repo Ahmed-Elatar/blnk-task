@@ -34,8 +34,8 @@ Ensure you have the following installed:
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Ahmed-Elatar/e-finance.git
-    cd e-finance
+    git clone https://github.com/Ahmed-Elatar/blnk-task.git
+    cd blnk-task
     ```
 
 2. Build Docker containers:
