@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h1>Loan Status</h1>
+    {% if loan_status %}
+        <p><strong>Customer Name:</strong> {{ name }}</p>
+        <p><strong>Single Installment Amount:</strong> $ {{ loan_status.single_Installments }}</p>
+        <p><strong>Installments Paid:</strong> {{ loan_status.Installments_paid }}</p>
+        <p><strong>Duration Left:</strong> {{ loan_status.duration_left }} months</p>
+
+        {% if loan_status.duration_left > 0 %}
+            <form method="post" action="{% url 'loan-status' %}">
+                {% csrf_token %}
+                <button type="submit">Pay Installment</button>
+            </form>
+        {% else %}
+            <p><strong>🎉 Loan Fully Paid! 🎉</strong></p>
+        {% endif %}
+
+    {% else %}
+        <p>Loan status details not found.</p>
+    {% endif %}
+</div>
+{% endblock %}

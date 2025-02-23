@@ -18,31 +18,14 @@ from django.db.models import Q
 
 
 
-# class Fund(models.Model):
-#     provider = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name='Fund',
-#         limit_choices_to={
-#             'groups__name': 'Loan_Provider'  # Filter users in the 'Loan Provider' group
-#         }
-#     )
+class LoanDetails(models.Model):
+    min_loan = models.FloatField()
+    max_loan = models.FloatField()
     
-#     total_budget = models.FloatField()
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=[
-#             ('PENDING', 'Pending'),
-#             ('APPROVED', 'Approved'),
-#             ('REJECTED', 'Rejected'),
-#         ],
-#         default='PENDING'
-#     ) 
-
-#     def __str__(self):
-#         return self.provider.username
 
 
+class Total_money(models.Model):
+    total_money = models.FloatField(default=0)
 
-
+    def __str__(self):
+        return str(self.total_money)

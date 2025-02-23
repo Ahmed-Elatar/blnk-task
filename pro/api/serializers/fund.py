@@ -4,6 +4,8 @@ from ..models.provider import *
 
 
 class FundSerializer(serializers.ModelSerializer):
+    provider_username = serializers.CharField(source="provider.username", read_only=True)
+
     class Meta:
         model = Fund
         fields = '__all__'
@@ -14,9 +16,3 @@ class AccountSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-# class LoanFundSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = LoanFund
-#         fields = '__all__'
-#         read_only_fields = ['available_funds']

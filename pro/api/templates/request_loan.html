@@ -1,0 +1,13 @@
+<!-- request_loan.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h1>Request a Loan</h1>
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        
+        <input type="submit" value="Submit Loan Request">
+    </form>
+</div>
+{% endblock %}

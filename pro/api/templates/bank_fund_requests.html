@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h1>Fund Requests</h1>
+    {% if fund_requests %}
+        <table>
+            <tr>
+                <th>Provider</th>
+                <th>Fund ID</th>
+                <th>Total Budget</th>
+                <th>Status</th>
+            </tr>
+            {% for fund in fund_requests %}
+            <tr>
+                
+                    
+                <th>{{ fund.provider_username }}</th>
+                <td><a href="{% url 'bank-fund-request' fund.id %}"> {{ fund.id }} </a></td>
+                <td>$ {{ fund.total_budget }}</td>
+                <td>{{ fund.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No fund requests available.</p>
+    {% endif %}
+</div>
+{% endblock %}

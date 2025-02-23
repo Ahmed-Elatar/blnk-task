@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h1>Account Details</h1>
+    {% if account %}
+        <p><strong>Account Name:</strong> {{ name }}</p>
+        
+        <p><strong>Origin Balance:</strong> $ {{ account.total_budget }}</p>
+        <p><strong>account_profit:</strong> $ {{ account.account_profit }}</p>
+    {% else %}
+        <p>Account details not found.</p>
+    {% endif %}
+</div>
+{% endblock %}
